@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TextMeshProUGUI revolutionsPerMinuteText;
 
     private Rigidbody playerRb;
-    
+
     // keep track of all wheels
     [SerializeField] List<WheelCollider> allWheels;
     [SerializeField] int wheelsOnGround;
@@ -38,14 +38,16 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
-        // Moves the car forward based on vertical input
-        // transform.Translate(Vector3.forward * Time.deltaTime * speed *forwardInput);
-        // Rotates the car based on horizontal input
-        // transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed *  horizontalInput);
         if (IsOnGround())
         {
+            // Moves the car forward based on vertical input
             playerRb.AddRelativeForce(Vector3.forward * forwardInput * horsePower);
-            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+            if (playerRb.velocity.magnitude > 0)
+            {
+                // Rotates the car based on horizontal input
+                transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+            }
+
 
             // Calculate speed in Km H
             //Mathf.RoundToInt - rounds to closest integer
@@ -56,6 +58,11 @@ public class PlayerController : MonoBehaviour
             // % - дает остаток
             rpm = (speed % 30) * 40;
             revolutionsPerMinuteText.SetText("RPM: " + rpm);
+        }
+        else
+        {
+             speedometerText.SetText("Speed: 0 Km/H");
+             revolutionsPerMinuteText.SetText("RPM: 0");
         }
     }
 
