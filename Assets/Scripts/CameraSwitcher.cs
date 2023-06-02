@@ -9,6 +9,7 @@ public class CameraSwitcher : MonoBehaviour
     [SerializeField] private Camera thirdPersonCamera;
     [SerializeField] private Camera thirdPersonCameraPlayer2;
     bool mainCameraActive = true;
+    bool mainCamera2Active = true;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
@@ -31,15 +32,15 @@ public class CameraSwitcher : MonoBehaviour
 
          if (Input.GetKeyDown(KeyCode.B))
         {
-            mainCameraActive = !mainCameraActive;
+            mainCamera2Active = !mainCamera2Active;
 
-            if (!mainCameraActive)
+            if (!mainCamera2Active)
             {
                 firstPersonCameraPlayer2.gameObject.SetActive(true);
                 thirdPersonCameraPlayer2.gameObject.SetActive(false);
                 Debug.Log("Player 2 First Person Camera activated");
             }
-            else if (mainCameraActive)
+            else if (mainCamera2Active)
             {
                 thirdPersonCameraPlayer2.gameObject.SetActive(true);
                 firstPersonCameraPlayer2.gameObject.SetActive(false);
